@@ -14,7 +14,7 @@ public class FooterPage  extends BasePage{
 	
 	By socialLinks=By.xpath("//ul[@class='DoQ1yb']/li");
 	
-	List<WebElement> getsocailLinks(){
+	public List<WebElement> getsocailLinks(){
 		return driver.findElements(socialLinks);
 	}
 	

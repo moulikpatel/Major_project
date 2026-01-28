@@ -26,10 +26,7 @@ public class ExcelUtility {
 	public CellStyle style;   
 	String path;
 	
-	public ExcelUtility(String path)
-	{
-		this.path=path;
-	}
+
 		
 	public int getRowCount(String sheetName) throws IOException 
 	{
@@ -54,101 +51,18 @@ public class ExcelUtility {
 		return cellcount;
 	}
 	
-	
-	public String getCellData(String sheetName,int rownum,int colnum) throws IOException
+	public XSSFSheet createSheet(XSSFWorkbook workbook) 
 	{
-		fi=new FileInputStream(path);
-		workbook=new XSSFWorkbook(fi);
-		sheet=workbook.getSheet(sheetName);
-		row=sheet.getRow(rownum);
-		cell=row.getCell(colnum);
-		
-		DataFormatter formatter = new DataFormatter();
-		String data;
-		try{
-		data = formatter.formatCellValue(cell); //Returns the formatted value of a cell as a String regardless of the cell type.
-		}
-		catch(Exception e)
-		{
-			data="";
-		}
-		workbook.close();
-		fi.close();
-		return data;
+		return workbook.createSheet("Search");
 	}
 	
-	public void setCellData(String sheetName,int rownum,int colnum,String data) throws IOException
-	{
-		File xlfile=new File(path);
-		if(!xlfile.exists())    // If file not exists then create new file
-		{
-		workbook=new XSSFWorkbook();
-		fo=new FileOutputStream(path);
-		workbook.write(fo);
-		}
-				
-		fi=new FileInputStream(path);
-		workbook=new XSSFWorkbook(fi);
-			
-		if(workbook.getSheetIndex(sheetName)==-1) // If sheet not exists then create new Sheet
-			workbook.createSheet(sheetName);
-		sheet=workbook.getSheet(sheetName);
-					
-		if(sheet.getRow(rownum)==null)   // If row not exists then create new Row
-				sheet.createRow(rownum);
-		row=sheet.getRow(rownum);
-		
-		cell=row.createCell(colnum);
-		cell.setCellValue(data);
-		fo=new FileOutputStream(path);
-		workbook.write(fo);		
-		workbook.close();
-		fi.close();
-		fo.close();
+	public XSSFRow createRow(XSSFSheet sheet,int i) {
+		return sheet.createRow(i);
 	}
-	
-	
-	public void fillGreenColor(String sheetName,int rownum,int colnum) throws IOException
-	{
-		fi=new FileInputStream(path);
-		workbook=new XSSFWorkbook(fi);
-		sheet=workbook.getSheet(sheetName);
-		
-		row=sheet.getRow(rownum);
-		cell=row.getCell(colnum);
-		
-		style=workbook.createCellStyle();
-		
-		style.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-		style.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
-				
-		cell.setCellStyle(style);
-		workbook.write(fo);
-		workbook.close();
-		fi.close();
-		fo.close();
+	public XSSFCell createCell(XSSFRow row,int i) {
+		return row.createCell(i);
 	}
-	
-	
-	public void fillRedColor(String sheetName,int rownum,int colnum) throws IOException
-	{
-		fi=new FileInputStream(path);
-		workbook=new XSSFWorkbook(fi);
-		sheet=workbook.getSheet(sheetName);
-		row=sheet.getRow(rownum);
-		cell=row.getCell(colnum);
-		
-		style=workbook.createCellStyle();
-		
-		style.setFillForegroundColor(IndexedColors.RED.getIndex());
-		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
-		
-		cell.setCellStyle(style);		
-		workbook.write(fo);
-		workbook.close();
-		fi.close();
-		fo.close();
-	}
+
 	
 }
 
