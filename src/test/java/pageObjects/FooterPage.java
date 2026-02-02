@@ -13,9 +13,17 @@ public class FooterPage  extends BasePage{
 	}
 	
 	By socialLinks=By.xpath("//ul[@class='DoQ1yb']/li");
+	By emailInput=By.xpath("//input[@id='newsletter-form-footer']");
+	By subscribeBtn=By.xpath("//button[@data-testid='newsletter-subscribe-button']");
 	
 	public List<WebElement> getsocailLinks(){
 		return driver.findElements(socialLinks);
+	}
+	public void setEmail(String val) {
+		driver.findElement(emailInput).sendKeys(val);
+	}
+	public void clickSubscribeBtn() {
+		driver.findElement(subscribeBtn).click();
 	}
 	
 	
